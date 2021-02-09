@@ -1,0 +1,10 @@
+extends layout 
+
+block content
+    h1= title 
+    p welcome to#(title)
+
+        form(action="loginExempel/", method="post")
+            input#username(type="text", name="username")
+            input#password(type="password", name="password")
+            button(type="submit") Login
