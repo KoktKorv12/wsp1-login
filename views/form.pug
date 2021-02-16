@@ -4,6 +4,10 @@ block content
     h1= title 
     p Welcome to  #{title}
 
+    if errors
+        foreach error in errors
+            p= error
+
         form(action="/login", method="post")
             div
                 label(for="username") Username

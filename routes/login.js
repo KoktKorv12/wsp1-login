@@ -21,7 +21,7 @@ const myPlaintextPassword = req.params.pwd;
   });
 });
 
-/* post login */
+/* POST login */
 router.post('/',
   body('username').notEmpty().trim(),
   body('password').notEmpty(),
@@ -30,38 +30,39 @@ router.post('/',
       // Finds the validation errors in this request and wraps them in an object with handy functions
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        res.render('login', { errors: errors.array()});
+       // return res.status(400).json({ errors: errors.array() });
       }
 
-  console.log(req.body);
   const username = req.body.username;
   const password = req.body.password;
 
   if (username && password) {
     try {
       const sql = 'SELECT password FROM users WHERE name = ?';
-      const result = await query(sql, username, password);
+      const result = await query(sql, username);
 
-      bcrypt.compare(password, result[0].password, function(err, result){
-        res.json({
-          result
+      if(result.length > 0) {
+        bcrypt.compare(password, result[0].password, function(err, result) {
+          if (result == true) {
+            req.session.loggedin = true;
+            req.session.username = username;
+            res.redirect('/topsecret');
+          } else {
+            res.render('login',{ error: 'Wrong username or password!'});
+          }
         });
-      });
-
+      } else {
+        res.render('login',{ error: 'Wrong username or password!'});
+      }
     } catch (e) {
-      next (e);
+      next(e);
       console.error(e);
     }
+  } else {
+    res.render('login',{ error: 'Wrong username or password!'});
   }
-}),
-  //logga in med DOLD tvåFaktorLogin
+});
 
-//   if (password == "losenord") {
-//     res.send('Du är inloggad');
-//   } else {
-//     // kommentera ut vid felsökning
-//     res.redirect('/login');
-//   }
-// });
 
 module.exports = router;
