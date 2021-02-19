@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
+const session = require('express-session');
 
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
@@ -26,6 +27,13 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: 'S3KuR|T4S', // recommended but wont be set due to http
+  resave: false,
+  saveUninitialized: true,
+  cookie: {samesite: true}
+}));
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);

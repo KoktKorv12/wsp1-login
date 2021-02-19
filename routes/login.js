@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('form', {title: 'Login exempel'});
+  res.render('login', {title: 'Login exempel'});
 });
 
 /* GET login listing. */
@@ -47,7 +47,7 @@ router.post('/',
           if (result == true) {
             req.session.loggedin = true;
             req.session.username = username;
-            res.redirect('/topsecret');
+            res.redirect('/login');
           } else {
             res.render('login',{ error: 'Wrong username or password!'});
           }

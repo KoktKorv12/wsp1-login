@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "mocha -r dotenv/config --timeout 10000 --exit"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -11,11 +12,17 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "express-session": "^1.17.1",
     "express-validator": "^6.9.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "node-sass-middleware": "0.11.0",
     "pug": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "supertest": "^6.1.3"
   }
 }
