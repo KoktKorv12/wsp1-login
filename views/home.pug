@@ -1,10 +1,11 @@
-extends layout 
+extends layout
 
 block content
-
-    form(action="/logout", method="post")
-        button(type="submit") Logout 
-
+  main.container
     h1 Welcome back user.
 
-    h2 Change password
+    form(action="/logout", method="post")
+      //- vi låtsas vara en delete request
+      button(type="submit") Logout
+
+    h2 Change password 
